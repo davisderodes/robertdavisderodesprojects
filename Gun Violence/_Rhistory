@@ -1,0 +1,512 @@
+full_ks <- plm(formula = DR ~ PGP2013 + AGP2013 + PPC2013 + PS2013 + PM2013 + AM2013 + PBC2013 +
+ABC2013 + PAR2013 + AAR2013 + NFL2013 + TGA2013 + LGA2013 + LSG2013 + d2014 + d2015,
+data = panel, effect = 'twoways', model = 'within')
+summary(full_ks)
+fd <- lm(dr_delta ~ PGP2013 + AGP2013 + PPC2013 + PS2013 + PM2013 + AM2013 + PBC2013 +
+ABC2013 + PAR2013 + AAR2013 + NFL2013 + TGA2013 + LGA2013 + LSG2013 + d2014 + d2015, data = ponel)
+summary(fd)
+fd <- lm(dr_delta ~ PGP2013 + AGP2013 + PPC2013 + PS2013 + PM2013 + AM2013 + PBC2013 +
+ABC2013 + PAR2013 + AAR2013 + NFL2013 + TGA2013 + LGA2013 + LSG2013 + d2013 + d2014 + d2015, data = ponel)
+summary(fd)
+full_ks <- plm(formula = DR ~ PGP2013 + AGP2013 + PPC2013 + PS2013 + PM2013 + AM2013 + PBC2013 +
+ABC2013 + PAR2013 + AAR2013 + NFL2013 + TGA2013 + LGA2013 + LSG2013 + d2015,
+data = panel, effect = 'twoways', model = 'within')
+summary(full_ks)
+full_ks <- plm(formula = DR ~ GovR + LegR + StateR + d2012 + d2013 + d2014 + d2015, data = panel, effects = 'twoways', model = 'within')
+full_ks <- plm(formula = DR ~ PGP2013 + AGP2013 + PPC2013 + PS2013 + PM2013 + AM2013 + PBC2013 +
+ABC2013 + PAR2013 + AAR2013 + NFL2013 + TGA2013 + LGA2013 + LSG2013 + d2015,
+data = panel, effect = 'twoways', model = 'within')
+summary(full_ks)
+full_ks_party <- plm(formula = DR ~ GovR + LegR + StateR + d2012 + d2013 + d2014 + d2015, data = panel, effects = 'twoways', model = 'within')
+summary(full_ks_party)
+full_ks_party <- plm(formula = DR ~ GovR + LegR + LegD + StateD + StateR + d2012 + d2013 + d2014 + d2015, data = panel, effects = 'twoways', model = 'within')
+summary(full_ks_party)
+full_ks_party <- plm(formula = DR ~ GovR + LegR + LegD + StateD + StateR+ d2013 + d2014 + d2015, data = panel, effects = 'twoways', model = 'within')
+summary(full_ks_party)
+full_1 <- plm(formula = DR ~   PPC2013 + PM2013
++StateR + StateD + d2014 + d2015,
+data = panel, effect = 'twoways', model = 'within')
+summary(full_1, robust = TRUE)
+full_ks_party <- plm(formula = DR ~ GovR + LegR + LegD + StateD + StateR+ d2013 + d2014 + d2015, data = panel, effects = 'twoways', model = 'within')
+summary(full_ks_party)
+b_ks <- plm(formula = DR ~  Pro + Anti + LegR + LegD + GovR + StateR + StateD + d2015,
+data = panel, effect = 'twoways', model = 'within')
+summary(b_ks)
+otherdata <- read.csv("Data20132014.csv")
+full_ks <- plm(formula = DR ~ PGP2013 + AGP2013 + PPC2013 + PS2013 + PM2013 + AM2013 + PBC2013 +
+ABC2013 + PAR2013 + AAR2013 + NFL2013 + TGA2013 + LGA2013 + LSG2013 + d2014,
+data = otherdata, effect = 'twoways', model = 'within')
+summary(full_ks)
+full_ks <- plm(formula = DR ~ PGP2013 + AGP2013 + PPC2013 + PS2013 + PM2013 + AM2013 + PBC2013 +
+ABC2013 + PAR2013 + AAR2013 + NFL2013 + TGA2013 + LGA2013 + LSG2013 + Year,
+data = otherdata, effect = 'twoways', model = 'within')
+summary(full_ks)
+full_ks <- plm(formula = DR ~ Year + PGP2013 + AGP2013 + PPC2013 + PS2013 + PM2013 + AM2013 + PBC2013 +
+ABC2013 + PAR2013 + AAR2013 + NFL2013 + TGA2013 + LGA2013 + LSG2013 ,
+data = otherdata, effect = 'twoways', model = 'within')
+summary(full_ks)
+fd <- lm(dr_delta ~ PGP2013 + AGP2013 + PPC2013 + PS2013 + PM2013 + AM2013 + PBC2013 +
+ABC2013 + PAR2013 + AAR2013 + NFL2013 + TGA2013 + LGA2013 + LSG2013 + d2014 + d2015, data = ponel)
+summary(fd)
+library(plm)
+library(xtable)
+library(car)
+library(MASS)
+mydata <- read.csv("ADVStatPaneledw2015Party.csv")
+mydata$TotalPro <- mydata$PGP2013 + mydata$AAR2013 + mydata$PPC2013 + mydata$PS2013 + mydata$AM2013 + mydata$ABC2013 + mydata$NFL2013 + mydata$LGA2013
+mydata$TotalAnti <- mydata$AGP2013 + mydata$PAR2013 + mydata$PM2013 + mydata$PBC2013 + mydata$TGA2013 + mydata$LSG2013
+mydata$TotalLaws <- mydata$TotalPro + mydata$TotalAnti
+mydata$Pro <- ifelse(mydata$TotalPro == 0, 0, 1)
+mydata$Anti <- ifelse(mydata$TotalAnti == 0, 0, 1)
+mydata$Law <- ifelse(mydata$TotalLaws == 0, 0, 1)
+panel <- mydata
+panel$LegD <- ifelse(panel$LegR == -1, 1, 0)
+panel$GovD <- ifelse(panel$GovR == -1, 1, 0)
+panel$StateD <- ifelse(panel$StateR == -1, 1, 0)
+panel$LegR <- ifelse(panel$LegR == -1, 0, panel$LegR)
+panel$GovR <- ifelse(panel$GovR == -1, 0, panel$GovR)
+panel$StateR <- ifelse(panel$StateR == -1, 0, panel$StateR)
+panel$yd <- ifelse(panel$d2012 == 1, 0, 1)
+panel$yd <- ifelse(panel$d2014 == 1, 2, panel$yd)
+panel$yd <- ifelse(panel$d2015 == 1, 3, panel$yd)
+panel<- pdata.frame(panel, index = c("State", "Year"))
+dr_delta <- c()
+for(i in 0:49){
+state_i <- i*4+1
+delta1213 <- panel[state_i + 1,]$DR - panel[state_i, ]$DR
+delta1314 <- panel[state_i + 2,]$DR - panel[state_i + 1, ]$DR
+delta1415 <- panel[state_i + 3,]$DR - panel[state_i + 2, ]$DR
+dr_delta <- c(dr_delta, 0, delta1213, delta1314, delta1415)
+}
+ponel <- panel
+ponel$dr_delta <- dr_delta
+ponel$PGP2013 <- ifelse(ponel$d2015 == 1, 0, ponel$PGP2013)
+ponel$PPC2013 <- ifelse(ponel$d2015 == 1, 0, ponel$PPC2013)
+ponel$AGP2013 <- ifelse(ponel$d2015 == 1, 0, ponel$AGP2013)
+ponel$PS2013 <- ifelse(ponel$d2015 == 1, 0, ponel$PS2013)
+ponel$PM2013 <- ifelse(ponel$d2015 == 1, 0, ponel$PM2013)
+ponel$AM2013 <- ifelse(ponel$d2015 == 1, 0, ponel$AM2013)
+ponel$PBC2013 <- ifelse(ponel$d2015 == 1, 0, ponel$PBC2013)
+ponel$ABC2013 <- ifelse(ponel$d2015 == 1, 0, ponel$ABC2013)
+ponel$PAR2013 <- ifelse(ponel$d2015 == 1, 0, ponel$PAR2013)
+ponel$AAR2013 <- ifelse(ponel$d2015 == 1, 0, ponel$AAR2013)
+ponel$NFL2013 <- ifelse(ponel$d2015 == 1, 0, ponel$NFL2013)
+ponel$TGA2013 <- ifelse(ponel$d2015 == 1, 0, ponel$TGA2013)
+ponel$LGA2013 <- ifelse(ponel$d2015 == 1, 0, ponel$LGA2013)
+ponel$LSG2013 <- ifelse(ponel$d2015 == 1, 0, ponel$LSG2013)
+View(panel)
+Brady_ks <- plm(formula = DR ~  Brady,
+data = panel, effect = 'twoways', model = 'within')
+summary(Brady_ks)
+Brady_ks <- plm(formula = DR ~  Brady + StateR,
+data = panel, effect = 'twoways', model = 'within')
+summary(Brady_ks)
+Brady_ks <- plm(formula = DR ~  Brady + StateR + GovR + LegR,
+data = panel, effect = 'twoways', model = 'within')
+summary(Brady_ks)
+Brady_ks <- plm(formula = DR ~  Brady + StateR + GovR + LegR + StateD + LegD,
+data = panel, effect = 'twoways', model = 'within')
+summary(Brady_ks)
+library(plm)
+library(xtable)
+library(car)
+library(MASS)
+mydata <- read.csv("ADVStatPaneledw2015Party.csv")
+mydata$TotalPro <- mydata$PGP2013 + mydata$AAR2013 + mydata$PPC2013 + mydata$PS2013 + mydata$AM2013 + mydata$ABC2013 + mydata$NFL2013 + mydata$LGA2013
+mydata$TotalAnti <- mydata$AGP2013 + mydata$PAR2013 + mydata$PM2013 + mydata$PBC2013 + mydata$TGA2013 + mydata$LSG2013
+mydata$TotalLaws <- mydata$TotalPro + mydata$TotalAnti
+mydata$Pro <- ifelse(mydata$TotalPro == 0, 0, 1)
+mydata$Anti <- ifelse(mydata$TotalAnti == 0, 0, 1)
+mydata$Law <- ifelse(mydata$TotalLaws == 0, 0, 1)
+panel <- mydata
+panel$LegD <- ifelse(panel$LegR == -1, 1, 0)
+panel$GovD <- ifelse(panel$GovR == -1, 1, 0)
+panel$StateD <- ifelse(panel$StateR == -1, 1, 0)
+panel$LegR <- ifelse(panel$LegR == -1, 0, panel$LegR)
+panel$GovR <- ifelse(panel$GovR == -1, 0, panel$GovR)
+panel$StateR <- ifelse(panel$StateR == -1, 0, panel$StateR)
+panel$yd <- ifelse(panel$d2012 == 1, 0, 1)
+panel$yd <- ifelse(panel$d2014 == 1, 2, panel$yd)
+panel$yd <- ifelse(panel$d2015 == 1, 3, panel$yd)
+panel<- pdata.frame(panel, index = c("State", "Year"))
+View(panel)
+Brady_ks <- plm(formula = DR ~  Brady + Unemployment,
+data = panel, effect = 'twoways', model = 'within')
+summary(Brady_ks)
+Brady_ks <- plm(formula = DR ~  Brady + GovR,
+data = panel, effect = 'twoways', model = 'within')
+summary(Brady_ks)
+Brady_ks <- plm(formula = DR ~  Brady + StateR,
+data = panel, effect = 'twoways', model = 'within')
+summary(Brady_ks)
+Brady_ks <- plm(formula = DR ~  Brady + StateD,
+data = panel, effect = 'twoways', model = 'within')
+summary(Brady_ks)
+dr_delta <- c()
+unem_delta <- c()
+for(i in 0:49){
+state_i <- i*4+1
+delta1213 <- panel[state_i + 1,]$DR - panel[state_i, ]$DR
+delta1314 <- panel[state_i + 2,]$DR - panel[state_i + 1, ]$DR
+delta1415 <- panel[state_i + 3,]$DR - panel[state_i + 2, ]$DR
+delta1213U <- panel[state_i + 1,]$Unemployment - panel[state_i, ]$Unemployment
+delta1314U <- panel[state_i + 2,]$Unemployment - panel[state_i + 1, ]$Unemployment
+delta1415U <- panel[state_i + 3,]$Unemployment - panel[state_i + 2, ]$Unemployment
+dr_delta <- c(dr_delta, 0, delta1213, delta1314, delta1415)
+unem_delta <- c(unem_delta, 0, delta1213U, delta1314U, delta1415U)
+}
+ponel <- panel
+ponel$dr_delta <- dr_delta
+ponel$unem_delta <- unem_delta
+ponel$PGP2013 <- ifelse(ponel$d2015 == 1, 0, ponel$PGP2013)
+ponel$PPC2013 <- ifelse(ponel$d2015 == 1, 0, ponel$PPC2013)
+ponel$AGP2013 <- ifelse(ponel$d2015 == 1, 0, ponel$AGP2013)
+ponel$PS2013 <- ifelse(ponel$d2015 == 1, 0, ponel$PS2013)
+ponel$PM2013 <- ifelse(ponel$d2015 == 1, 0, ponel$PM2013)
+ponel$AM2013 <- ifelse(ponel$d2015 == 1, 0, ponel$AM2013)
+ponel$PBC2013 <- ifelse(ponel$d2015 == 1, 0, ponel$PBC2013)
+ponel$ABC2013 <- ifelse(ponel$d2015 == 1, 0, ponel$ABC2013)
+ponel$PAR2013 <- ifelse(ponel$d2015 == 1, 0, ponel$PAR2013)
+ponel$AAR2013 <- ifelse(ponel$d2015 == 1, 0, ponel$AAR2013)
+ponel$NFL2013 <- ifelse(ponel$d2015 == 1, 0, ponel$NFL2013)
+ponel$TGA2013 <- ifelse(ponel$d2015 == 1, 0, ponel$TGA2013)
+ponel$LGA2013 <- ifelse(ponel$d2015 == 1, 0, ponel$LGA2013)
+ponel$LSG2013 <- ifelse(ponel$d2015 == 1, 0, ponel$LSG2013)
+full_ks <- plm(formula = DR ~ Year + PGP2013 + AGP2013 + PPC2013 + PS2013 + PM2013 + AM2013 + PBC2013 +
+ABC2013 + PAR2013 + AAR2013 + NFL2013 + TGA2013 + LGA2013 + LSG2013 +unem_delta,
+data = otherdata, effect = 'twoways', model = 'within')
+fd <- lm(dr_delta ~ PGP2013 + AGP2013 + PPC2013 + PS2013 + PM2013 + AM2013 + PBC2013 +
+ABC2013 + PAR2013 + AAR2013 + NFL2013 + TGA2013 + LGA2013 + LSG2013 + d2014 + d2015 + unem_delta, data = ponel)
+summary(fd)
+Brady_ks <- plm(formula = DR ~  Brady + StateD + LegD + GovR,
+data = panel, effect = 'twoways', model = 'within')
+summary(Brady_ks)
+Brady_ks <- plm(formula = DR ~  Brady + StateD + LegD,
+data = panel, effect = 'twoways', model = 'within')
+summary(Brady_ks)
+Brady_ks <- plm(formula = DR ~  Brady + StateD,
+data = panel, effect = 'twoways', model = 'within')
+summary(Brady_ks)
+Brady_ks <- plm(formula = DR ~  Brady + Unemployment,
+data = panel, effect = 'twoways', model = 'within')
+summary(Brady_ks)
+Brady_ks <- plm(formula = DR ~  Brady,
+data = panel, effect = 'twoways', model = 'within')
+summary(Brady_ks)
+Brady_ks <- plm(formula = DR ~  Brady + LegR,
+data = panel, effect = 'twoways', model = 'within')
+summary(Brady_ks)
+Brady_ks <- plm(formula = DR ~  Brady + LegD,
+data = panel, effect = 'twoways', model = 'within')
+summary(Brady_ks)
+Brady_ks <- plm(formula = DR ~  Brady + GovD,
+data = panel, effect = 'twoways', model = 'within')
+summary(Brady_ks)
+Brady_ks <- plm(formula = DR ~  Brady + GovR,
+data = panel, effect = 'twoways', model = 'within')
+summary(Brady_ks)
+Brady_ks <- plm(formula = DR ~  Brady + StateD,
+data = panel, effect = 'twoways', model = 'within')
+summary(Brady_ks)
+Brady_ks <- plm(formula = DR ~  Brady + StateD + StateR,
+data = panel, effect = 'twoways', model = 'within')
+summary(Brady_ks)
+Brady_ks <- plm(formula = DR ~  Brady + StateD + StateR + Unemployment,
+data = panel, effect = 'twoways', model = 'within')
+summary(Brady_ks)
+c_ks <- plm(formula = DR ~  TotalPro + TotalAnti + LegR + LegD + GovR + StateR + StateD + d2012 + d2013 + d2014 + d2015,
+data = panel, effect = 'twoways', model = 'within')
+summary(c_ks)
+library(readr)
+fart <- read_csv("~/Desktop/fart.csv")
+View(fart)
+library(plm)
+plm(Awesomeness ~ Tacos + d2012 + d2013,data = fart, effect = 'twoways', model = 'within')
+model <- plm(Awesomeness ~ Tacos + d2012 + d2013,data = fart, effect = 'twoways', model = 'within')
+summary(model)
+full_ks <- plm(formula = DR ~ Year + PGP2013 + AGP2013 + PPC2013 + PS2013 + PM2013 + AM2013 + PBC2013 +
+ABC2013 + PAR2013 + AAR2013 + NFL2013 + TGA2013 + LGA2013 + LSG2013, index = c('ID', 'year')
+data = otherdata, effect = 'twoways', model = 'within')
+full_ks <- plm(formula = DR ~ Year + PGP2013 + AGP2013 + PPC2013 + PS2013 + PM2013 + AM2013 + PBC2013 +
+ABC2013 + PAR2013 + AAR2013 + NFL2013 + TGA2013 + LGA2013 + LSG2013, index = c('State', 'Year')
+data = otherdata, effect = 'twoways', model = 'within')
+full_ks <- plm(formula = DR ~ Year + PGP2013 + AGP2013 + PPC2013 + PS2013 + PM2013 + AM2013 + PBC2013 +
+ABC2013 + PAR2013 + AAR2013 + NFL2013 + TGA2013 + LGA2013 + LSG2013, index = c('State', 'Year'),
+data = otherdata, effect = 'twoways', model = 'within')
+full_ks <- plm(formula = DR ~ Year + PGP2013 + AGP2013 + PPC2013 + PS2013 + PM2013 + AM2013 + PBC2013 +
+ABC2013 + PAR2013 + AAR2013 + NFL2013 + TGA2013 + LGA2013 + LSG2013, index = c('State', 'Year'),
+data = panel, effect = 'twoways', model = 'within')
+summary(full_ks)
+data <-
+structure(list(lexptot = c(8.28377505197124, 9.1595012302023,
+8.14707583238833, 9.86330744180814, 8.21391453619232, 8.92372556833205,
+7.77219149815994, 8.58202430280175, 8.34096828565733, 10.1133857229336,
+8.56482997492403, 8.09468633074053, 8.27040804817704, 8.69834992618814,
+8.03086333985764, 8.89644392254136, 8.20990433577082, 8.82621293136669,
+7.79379981225575, 8.16139809188569, 8.25549748271241, 8.57464947213076,
+8.2714431846277, 8.72374048671495, 7.98522888221012, 8.56460042433047,
+8.22778847721461, 9.15431416391622, 8.25261818916933, 8.88033778695326
+data <-
+structure(list(lexptot = c(8.28377505197124, 9.1595012302023,
+8.14707583238833, 9.86330744180814, 8.21391453619232, 8.92372556833205,
+7.77219149815994, 8.58202430280175, 8.34096828565733, 10.1133857229336,
+8.56482997492403, 8.09468633074053, 8.27040804817704, 8.69834992618814,
+8.03086333985764, 8.89644392254136, 8.20990433577082, 8.82621293136669,
+7.79379981225575, 8.16139809188569, 8.25549748271241, 8.57464947213076,
+8.2714431846277, 8.72374048671495, 7.98522888221012, 8.56460042433047,
+8.22778847721461, 9.15431416391622, 8.25261818916933, 8.88033778695326
+), year = c(0L, 1L, 0L, 1L, 0L, 1L, 0L, 1L, 0L, 1L, 0L, 1L, 0L,
+1L, 0L, 1L, 0L, 1L, 0L, 1L, 0L, 1L, 0L, 1L, 0L, 1L, 0L, 1L, 0L,
+1L), dfmfdyr = c(0, 1, 0, 1, 0, 1, 0, 1, 0, 1, 0, 0, 0, 0, 0,
+0, 0, 1, 0, 1, 0, 1, 0, 1, 0, 1, 0, 0, 0, 0), dfmfd98 = c(1,
+1, 1, 1, 1, 1, 1, 1, 1, 1, 0, 0, 0, 0, 0, 0, 1, 1, 1, 1, 1, 1,
+1, 1, 1, 1, 0, 0, 0, 0), nh = c(11054L, 11054L, 11061L, 11061L,
+11081L, 11081L, 11101L, 11101L, 12021L, 12021L, 12035L, 12035L,
+12051L, 12051L, 12054L, 12054L, 12081L, 12081L, 12121L, 12121L,
+13014L, 13014L, 13015L, 13015L, 13021L, 13021L, 13025L, 13025L,
+13035L, 13035L)), .Names = c("lexptot", "year", "dfmfdyr", "dfmfd98",
+"nh"), class = c("tbl_df", "data.frame"), row.names = c(NA, -30L
+))
+data <-
+structure(list(lexptot = c(8.28377505197124, 9.1595012302023,
+8.14707583238833, 9.86330744180814, 8.21391453619232, 8.92372556833205,
+7.77219149815994, 8.58202430280175, 8.34096828565733, 10.1133857229336,
+8.56482997492403, 8.09468633074053, 8.27040804817704, 8.69834992618814,
+8.03086333985764, 8.89644392254136, 8.20990433577082, 8.82621293136669,
+7.79379981225575, 8.16139809188569, 8.25549748271241, 8.57464947213076,
+8.2714431846277, 8.72374048671495, 7.98522888221012, 8.56460042433047,
+8.22778847721461, 9.15431416391622, 8.25261818916933, 8.88033778695326),
+year = c(0L, 1L, 0L, 1L, 0L, 1L, 0L, 1L, 0L, 1L, 0L, 1L, 0L, 1L, 0L, 1L, 0L, 1L, 0L, 1L, 0L, 1L, 0L, 1L, 0L, 1L, 0L, 1L, 0L,
+1L), dfmfdyr = c(0, 1, 0, 1, 0, 1, 0, 1, 0, 1, 0, 0, 0, 0, 0,  0, 0, 1, 0, 1, 0, 1, 0, 1, 0, 1, 0, 0, 0, 0), dfmfd98 = c(1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 0, 0, 0, 0, 0, 0, 1, 1, 1, 1, 1, 1,  1, 1, 1, 1, 0, 0, 0, 0),
+nh = c(11054L, 11054L, 11061L, 11061L,
+11081L, 11081L, 11101L, 11101L, 12021L, 12021L, 12035L, 12035L,
+12051L, 12051L, 12054L, 12054L, 12081L, 12081L, 12121L, 12121L,
+13014L, 13014L, 13015L, 13015L, 13021L, 13021L, 13025L, 13025L,
+13035L, 13035L)), .Names = c("lexptot", "year", "dfmfdyr", "dfmfd98",
+"nh"), class = c("tbl_df", "data.frame"), row.names = c(NA, -30L
+))
+View(data)
+model <- plm(lexptot ~ year + dfmfdyr + dfmfd98 + nh, data = data, model = "within", index = "nh")
+summary(model)
+full_ks <- plm(formula = DR ~ Year + PGP2013 + AGP2013 + PPC2013 + PS2013 + PM2013 + AM2013 + PBC2013 +
+ABC2013 + PAR2013 + AAR2013 + NFL2013 + TGA2013 + LGA2013 + LSG2013 + factor(Year), index = c('State', 'Year'),
+data = panel, effect = 'twoways', model = 'within')
+summary(full_ks)
+View(fart)
+library(readr)
+fart <- read_csv("~/Desktop/fart.csv")
+View(fart)
+model2 <- plm(Awesomeness ~ Tacos + Year, index = c('Person', 'Year'), data = fart, model = 'within')
+summary(model2)
+model2 <- plm(Awesomeness ~ Tacos + d2012 + d2013, index = c('Person', 'Year'), data = fart, model = 'within')
+summary(model2)
+full_ks <- plm(formula = DR ~ Year + PGP2013 + AGP2013 + PPC2013 + PS2013 + PM2013 + AM2013 + PBC2013 +
+ABC2013 + PAR2013 + AAR2013 + NFL2013 + TGA2013 + LGA2013 + LSG2013 + Year, index = c('State', 'Year'),
+data = panel, effect = 'twoways', model = 'within')
+summary(full_ks)
+Brady_ks <- plm(formula = DR ~  Year + Brady + StateD + StateR + Unemployment,
+data = panel, effect = 'twoways', model = 'within', index = c('State', 'Year'))
+summary(Brady_ks)
+model2 <- plm(Awesomeness ~ Tacos + d2012 + d2013, index = c('Person', 'Year'), data = fart, model = 'within')
+summary(model2)
+model2 <- plm(Awesomeness ~ Tacos + Year, index = c('Person', 'Year'), data = fart, model = 'within')
+summary(model2)
+Brady_ks <- plm(formula = DR ~  Year + Brady + StateD + StateR + Unemployment,
+data = panel, model = 'within', index = c('State', 'Year'))
+summary(Brady_ks)
+full_ks <- plm(formula = DR ~ Year + PGP2013 + AGP2013 + PPC2013 + PS2013 + PM2013 + AM2013 + PBC2013 +
+ABC2013 + PAR2013 + AAR2013 + NFL2013 + TGA2013 + LGA2013 + LSG2013, index = c('State', 'Year'),
+data = panel, model = 'within')
+summary(full_ks)
+summary(full_ks)
+full_ks <- plm(formula = DR ~ Year + PGP2013 + AGP2013 + PPC2013 + PS2013 + PM2013 + AM2013 + PBC2013 +
+ABC2013 + PAR2013 + AAR2013 + NFL2013 + TGA2013 + LGA2013 + LSG2013, index = c('State', 'Year'),
+data = panel, effect = 'twoways', model = 'within')
+summary(full_ks)
+full_ks <- plm(formula = DR ~ Year + PGP2013 + AGP2013 + PPC2013 + PS2013 + PM2013 + AM2013 + PBC2013 +
+ABC2013 + PAR2013 + AAR2013 + NFL2013 + TGA2013 + LGA2013 + LSG2013 + LegR + LegD + GovR + StateR + StateD, index = c('State', 'Year'),
+data = panel, model = 'within')
+summary(full_ks)
+full_ks <- plm(formula = DR ~ PGP2013 + AGP2013 + PPC2013 + PS2013 + PM2013 + AM2013 + PBC2013 +
+ABC2013 + PAR2013 + AAR2013 + NFL2013 + TGA2013 + LGA2013 + LSG2013 + LegR + LegD + GovR + StateR + StateD + Year, index = c('State', 'Year'),
+data = panel, model = 'within')
+summary(full_ks)
+fd <- lm(dr_delta ~ PGP2013 + AGP2013 + PPC2013 + PS2013 + PM2013 + AM2013 + PBC2013 +
+ABC2013 + PAR2013 + AAR2013 + NFL2013 + TGA2013 + LGA2013 + LSG2013 + d2014 + d2015 + unem_delta, data = ponel)
+summary(fd)
+fd2 <- lm(dr_delta ~ PPC2013 +  PM2013 + d2014 + d2015, data = ponel)
+summary(fd2)
+b_ks <- plm(formula = DR ~  Pro + Anti + LegR + LegD + GovR + StateR + StateD,
+data = panel, effect = 'twoways', model = 'within')
+summary(b_ks)
+c_ks <- plm(formula = DR ~  TotalPro + TotalAnti + LegR + LegD + GovR + StateR + StateD + d2012 + d2013 + d2014 + d2015,
+data = panel, effect = 'twoways', model = 'within')
+summary(c_ks)
+b_ks <- plm(formula = DR ~  Pro + Anti,
+data = panel, effect = 'twoways', model = 'within')
+summary(b_ks)
+b_ks <- plm(formula = DR ~  Pro + Anti + LegR + LegD + GovR + StateR + StateD,
+data = panel, effect = 'twoways', model = 'within')
+summary(b_ks)
+c_ks <- plm(formula = DR ~  TotalPro + TotalAnti + LegR + LegD + GovR + StateR + StateD + d2012 + d2013 + d2014 + d2015,
+data = panel, effect = 'twoways', model = 'within')
+summary(c_ks)
+phtest(full_ks, random1)
+full_ks <- plm(formula = DR ~ PGP2013 + AGP2013 + PPC2013 + PS2013 + PM2013 + AM2013 + PBC2013 +
+ABC2013 + PAR2013 + AAR2013 + NFL2013 + TGA2013 + LGA2013 + LSG2013 + LegR + LegD + GovR + StateR + StateD + Year, index = c('State', 'Year'),
+data = panel, effect = 'twoways', model = 'within')
+summary(full_ks)
+random1 <- plm(formula = DR ~ PGP2013 + AGP2013 + PPC2013 + PS2013 + PM2013 + AM2013 + PBC2013 +
+ABC2013 + PAR2013 + AAR2013 + NFL2013 + TGA2013 + LGA2013 + Year,
+data = panel, effect = 'twoways', model = 'random')
+random1 <- plm(formula = DR ~ PGP2013 + AGP2013 + PPC2013 + PS2013 + PM2013 + AM2013 + PBC2013 +
+ABC2013 + PAR2013 + AAR2013 + NFL2013 + TGA2013 + LGA2013,
+data = panel, effect = 'twoways', model = 'random')
+summary(random1)
+random1 <- plm(formula = DR ~ PGP2013 + AGP2013 + PPC2013 + PS2013 + PM2013 + AM2013 + PBC2013 +
+ABC2013 + PAR2013 + AAR2013 + NFL2013 + TGA2013 + LGA2013 + Year,
+data = panel, model = 'random')
+summary(random1)
+phtest(full_ks, random1)
+full_ks <- plm(formula = DR ~ PGP2013 + AGP2013 + PPC2013 + PS2013 + PM2013 + AM2013 + PBC2013 +
+ABC2013 + PAR2013 + AAR2013 + NFL2013 + TGA2013 + LGA2013 + LSG2013 + LegR + LegD + GovR + StateR + StateD + Year, index = c('State', 'Year'),
+data = panel, model = 'within')
+summary(full_ks)
+random1 <- plm(formula = DR ~ PGP2013 + AGP2013 + PPC2013 + PS2013 + PM2013 + AM2013 + PBC2013 +
+ABC2013 + PAR2013 + AAR2013 + NFL2013 + TGA2013 + LGA2013 + Year,
+data = panel, model = 'random')
+summary(random1)
+phtest(full_ks, random1)
+text <- DR ~ PGP2013 + AGP2013 + PPC2013 + PS2013 + PM2013 + AM2013 + PBC2013 +
+ABC2013 + PAR2013 + AAR2013 + NFL2013 + TGA2013 + LGA2013 + LSG2013 + LegR + LegD + GovR + StateR + StateD + Year
+phtest(text)
+phtest(text, data = panel)
+phtest(text, data = panel, method = "aux")
+phtest(text, data = panel)
+full_2 <- plm(formula = DR ~   PPC2013 + PM2013 + PS2013
++ LegR + LegD + GovR + StateR + StateD,
+data = panel, effect = 'twoways', model = 'within')
+summary(full_2, robust = TRUE)
+full_2 <- plm(formula = DR ~   PPC2013 + PM2013 + PS2013
++ LegR + LegD + GovR + StateR + StateD + Year,
+data = panel, model = 'within')
+summary(full_2, robust = TRUE)
+full_3 <- plm(formula = DR ~  PS2013
++ LegR + LegD + GovR + StateR + StateD + Year,
+data = panel,  model = 'within')
+summary(full_3, robust = TRUE)
+full_3 <- plm(formula = DR ~  PM2013
++ LegR + LegD + GovR + StateR + StateD + Year,
+data = panel,  model = 'within')
+summary(full_3, robust = TRUE)
+full_1 <- plm(formula = DR ~   PPC2013 + PM2013
++StateR + StateD,
+data = panel, effect = 'twoways', model = 'within')
+summary(full_1, robust = TRUE)
+full_1 <- plm(formula = DR ~   PPC2013 + PM2013 + Year
++StateR + StateD,
+data = panel,  model = 'within')
+full_1 <- plm(formula = DR ~   PPC2013 + PM2013
++StateR + StateD + Year,
+data = panel,  model = 'within')
+summary(full_1, robust = TRUE)
+full_1 <- plm(formula = DR ~   PPC2013 + PM2013
++ LegR + LegD + GovR +StateR + StateD + Year,
+data = panel,  model = 'within')
+summary(full_1, robust = TRUE)
+full_ks <- plm(formula = DR ~ PGP2013 + AGP2013 + PPC2013 + PS2013 + PM2013 + AM2013 + PBC2013 +
+ABC2013 + PAR2013 + AAR2013 + NFL2013 + TGA2013 + LGA2013 + LSG2013 + LegR + LegD + GovR + StateR + StateD + Year + Unemployment, index = c('State', 'Year'),
+data = panel, model = 'within')
+summary(full_ks)
+full_1 <- plm(formula = DR ~   PPC2013 + PM2013
++ LegR + LegD + GovR +StateR + StateD + Year + Unemployment,
+data = panel,  model = 'within')
+summary(full_1, robust = TRUE)
+b_ks <- plm(formula = DR ~  Pro + Anti + LegR + LegD + GovR + StateR + StateD + Year,
+data = panel, model = 'within')
+summary(b_ks)
+c_ks <- plm(formula = DR ~  TotalPro + TotalAnti + LegR + LegD + GovR + StateR + StateD + Year,
+data = panel, model = 'within')
+summary(c_ks)
+Brady_ks <- plm(formula = DR ~  Year + Brady + LegR + Legd + GovR + StateD + StateR + Unemployment,
+data = panel, model = 'within', index = c('State', 'Year'))
+summary(Brady_ks)
+Brady_ks <- plm(formula = DR ~  Year + Brady + LegR + Legd + GovR + StateD + StateR + Unemployment,
+data = panel, model = 'within', index = c('State', 'Year'))
+Brady_ks <- plm(formula = DR ~  Year + Brady + LegR + LegD + GovR + StateD + StateR + Unemployment + Year,
+data = panel, index = c('State', 'Year'))
+summary(Brady_ks)
+Brady_ks <- plm(formula = DR ~  Brady + LegR + LegD + GovR + StateD + StateR + Unemployment + Year,
+data = panel, index = c('State', 'Year'))
+summary(Brady_ks)
+Brady_ks <- plm(formula = DR ~  Brady + LegR + LegD + GovR + StateD + StateR + Year,
+data = panel, index = c('State', 'Year'))
+summary(Brady_ks)
+library(plm)
+library(xtable)
+library(car)
+library(MASS)
+mydata <- read.csv("ADVStatPaneledw2015Party.csv")
+mydata$TotalPro <- mydata$PGP2013 + mydata$AAR2013 + mydata$PPC2013 + mydata$PS2013 + mydata$AM2013 + mydata$ABC2013 + mydata$NFL2013 + mydata$LGA2013
+mydata$TotalAnti <- mydata$AGP2013 + mydata$PAR2013 + mydata$PM2013 + mydata$PBC2013 + mydata$TGA2013 + mydata$LSG2013
+mydata$TotalLaws <- mydata$TotalPro + mydata$TotalAnti
+mydata$Pro <- ifelse(mydata$TotalPro == 0, 0, 1)
+mydata$Anti <- ifelse(mydata$TotalAnti == 0, 0, 1)
+mydata$Law <- ifelse(mydata$TotalLaws == 0, 0, 1)
+panel <- mydata
+panel$LegD <- ifelse(panel$LegR == -1, 1, 0)
+panel$GovD <- ifelse(panel$GovR == -1, 1, 0)
+panel$StateD <- ifelse(panel$StateR == -1, 1, 0)
+panel$LegR <- ifelse(panel$LegR == -1, 0, panel$LegR)
+panel$GovR <- ifelse(panel$GovR == -1, 0, panel$GovR)
+panel$StateR <- ifelse(panel$StateR == -1, 0, panel$StateR)
+panel$yd <- ifelse(panel$d2012 == 1, 0, 1)
+panel$yd <- ifelse(panel$d2014 == 1, 2, panel$yd)
+panel$yd <- ifelse(panel$d2015 == 1, 3, panel$yd)
+panel<- pdata.frame(panel, index = c("State", "Year"))
+Brady_ks <- plm(formula = DR ~  Brady + LegR + LegD + GovR + StateD + StateR + Year,
+data = panel, index = c('State', 'Year'))
+summary(Brady_ks)
+full_ks <- plm(formula = DR ~ PGP2013 + AGP2013 + PPC2013 + PS2013 + PM2013 + AM2013 + PBC2013 +
+ABC2013 + PAR2013 + AAR2013 + NFL2013 + TGA2013 + LGA2013 + LSG2013 + LegR + LegD + GovD + StateR + StateD + Year, index = c('State', 'Year'),
+data = panel, model = 'within')
+summary(full_ks)
+R
+R
+full_ks <- plm(formula = DR ~ PGP2013 + AGP2013 + PPC2013 + PS2013 + PM2013 + AM2013 + PBC2013 +
+ABC2013 + PAR2013 + AAR2013 + NFL2013 + TGA2013 + LGA2013 + LSG2013 + LegR + LegD + GovR + StateR + StateD + Year, index = c('State', 'Year'),
+data = panel, model = 'within')
+summary(full_ks)
+full_ks <- plm(formula = DR ~ PGP2013 + AGP2013 + PPC2013 + PS2013 + PM2013 + AM2013 + PBC2013 +
+ABC2013 + PAR2013 + AAR2013 + NFL2013 + TGA2013 + LGA2013 + LSG2013 + LegR + LegD + GovR  + Year, index = c('State', 'Year'),
+data = panel, model = 'within')
+summary(full_ks)
+full_ks <- plm(formula = DR ~ PGP2013 + AGP2013 + PPC2013 + PS2013 + PM2013 + AM2013 + PBC2013 +
+ABC2013 + PAR2013 + AAR2013 + NFL2013 + TGA2013 + LGA2013 + LSG2013 + LegD + GovD +  StateD + Year, index = c('State', 'Year'),
+data = panel, model = 'within')
+summary(full_ks)
+which(panel$LegR == 1 & panel$GovR == 1)
+which(panel$LegR == 1 & panel$GovR == 0)
+which(panel$LegR == 0 & panel$LegD == 0 & panel$GovR == 1)
+which(panel$LegR == 0 & panel$LegD == 0 & panel$GovR == 0)
+which(panel$LegD == 1 & panel$GovR == 1)
+which(panel$LegD == 1 & panel$GovR == 0)
+nrow(which(panel$LegD == 1 & panel$GovR == 0))
+nrow(panel[panel$LegD == 1 & panel$GovR == 0])
+nrow(panel[panel$LegD == 1 & panel$GovR == 0],)
+nrow(panel[panel$LegD == 1 & panel$GovR == 0,])
+nrow(panel[panel$LegD == 1 & panel$GovR == 1,])
+nrow(panel[panel$LegD == 0 & panel$LegR == 0 & panel$GovR == 0,])
+nrow(panel[panel$LegD == 0 & panel$LegR == 0 & panel$GovR == 1,])
+nrow(panel[panel$LegR == 1 & panel$GovR == 0,])
+nrow(panel[panel$LegR == 1 & panel$GovR == 1,])
+full_ks <- plm(formula = DR ~ PGP2013 + AGP2013 + PPC2013 + PS2013 + PM2013 + AM2013 + PBC2013 +
+ABC2013 + PAR2013 + AAR2013 + NFL2013 + TGA2013 + LGA2013 + LSG2013 + LegD + GovR + StateR + StateD + Year, index = c('State', 'Year'),
+data = panel, model = 'within')
+summary(full_ks)
+full_ks <- plm(formula = DR ~ PGP2013 + AGP2013 + PPC2013 + PS2013 + PM2013 + AM2013 + PBC2013 +
+ABC2013 + PAR2013 + AAR2013 + NFL2013 + TGA2013 + LGA2013 + LSG2013 + LegD +  Year, index = c('State', 'Year'),
+data = panel, model = 'within')
+summary(full_ks)
+quick <- plm(formula = DR ~ LegD + LegR + GovR + StateR + StateD, index = c('State', 'Year'), data = panel, model = 'within')
+summary(quick)
